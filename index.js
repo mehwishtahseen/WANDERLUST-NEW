@@ -17,10 +17,38 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
 
-app.set("view engnie", "ejs");
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Hi! I am groot");
+});
+
+app.get("/listings", async (req, res) => {
+  let allListings = await Listing.find();
+  res.render("./listings/listings.ejs", { allListings });
+});
+
+app.get("/listings/new", async (req, res) => {
+  res.render("./listings/newlist.ejs");
+});
+
+app.get("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  let list = await Listing.findById(id);
+  res.render("./listings/list.ejs", { list });
+});
+
+app.post("/listings", async (req, res) => {
+  let newlist = new Listing(req.body.listing);
+  console.log(newlist);
+  await newlist.save();
+  res.redirect("./listings");
+});
+
+app.listen(port, () => {
+  console.log(`Server is listening on port :- ${port}`);
 });
 
 // app.get("/testListing", async (req, res) => {
@@ -36,7 +64,3 @@ app.get("/", (req, res) => {
 //   console.log("saved");
 //   res.send("Sample send");
 // });
-
-app.listen(port, () => {
-  console.log(`Server is listening on port :- ${port}`);
-});
