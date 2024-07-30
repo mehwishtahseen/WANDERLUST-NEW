@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New List</title>
+  </head>
+  <body>
+    <form action="/listings/<%= list._id %>?_method=PUT" method="post">
+      <label for="title">Enter Property Name : </label>
+      <input
+        type="text"
+        name="listing[title]"
+        id="title"
+        value="<%= list.title %>"
+      />
+      <br />
+      <label for="description">Enter Description : </label>
+      <textarea
+        rows="20"
+        cols="20"
+        name="listing[description]"
+        id="description"
+      >
+<%= list.description %></textarea
+      >
+      <br />
+      <label for="image"> Upload Image Url : </label>
+      <input
+        type="text"
+        name="listing[image.url]"
+        id="image"
+        value="<%= list.image.url %>"
+      />
+      <br />
+      <label for="price">Enter Price : </label>
+      <input
+        type="number"
+        name="listing[price]"
+        id="price"
+        value="<%= list.price %>"
+      />
+      <br />
+      <label for="location">Enter location : </label>
+      <input
+        type="text"
+        name="listing[location]"
+        id="location"
+        value="<%= list.location %>"
+      />
+      <br />
+      <label for="country">Enter Country : </label>
+      <input
+        type="text"
+        name="listing[country]"
+        id="country"
+        value="<%= list.country %>"
+      />
+      <br />
+      <button>Submit</button>
+    </form>
+  </body>
+</html>

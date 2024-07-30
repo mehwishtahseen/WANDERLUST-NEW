@@ -4,6 +4,7 @@ const port = 8080;
 const path = require("path");
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
+const methodOverride = require("method-override");
 
 main()
   .then((res) => {
@@ -20,10 +21,7 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.send("Hi! I am groot");
-});
+app.use(methodOverride("_method"));
 
 app.get("/listings", async (req, res) => {
   let allListings = await Listing.find();
@@ -44,7 +42,25 @@ app.post("/listings", async (req, res) => {
   let newlist = new Listing(req.body.listing);
   console.log(newlist);
   await newlist.save();
-  res.redirect("./listings");
+  res.redirect("/listings");
+});
+
+app.get("/listings/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  let list = await Listing.findById(id);
+  res.render("./listings/update.ejs", { list });
+});
+
+app.put("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  res.redirect(`/listings/${id}`);
+});
+
+app.delete("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndDelete(id);
+  res.redirect("/listings");
 });
 
 app.listen(port, () => {
