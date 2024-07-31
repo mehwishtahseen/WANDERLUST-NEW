@@ -1,21 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>List</title>
-  </head>
-  <body>
-    <h2><%= list.title %></h2>
-    <img style="width: 200px" src="<%= list.image.url %>" alt="" />
-    <p><%= list.description %></p>
-    <h4>Price : &#8377; <%= list.price.toLocaleString("en-IN") %></h4>
-    <h5>Location : <%= list.location %></h5>
-    <h5>Country : <%= list.country %></h5>
-    <a href="/listings/<%= list._id %>/edit">Update</a>
-    <form action="/listings/<%= list._id %>?_method=DELETE" method="post">
-      <button>Delete</button>
-    </form>
-    <hr />
-  </body>
-</html>
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-3">
+    <h3 class="mb-3">Listing Details :</h3>
+  </div>
+  <div class="card col-md-6 offset-3">
+    <img
+      class="card-img-top show-img"
+      src="<%= list.image.url %>"
+      alt="listing_img"
+    />
+
+    <div class="card-body car-padding">
+      <b><p class="card-text"><%= list.title %></p></b>
+      <p class="card-text mt-2"><%= list.description %></p>
+      <p class="card-text">
+        <b>Price : </b> &nbsp;&#8377;&nbsp; <%=
+        list.price.toLocaleString("en-IN") %>
+      </p>
+      <p class="card-text"><b>Location :</b>&nbsp; <%= list.location %></p>
+      <p class="card-text"><b>Country :</b>&nbsp; <%= list.country %></p>
+    </div>
+    <div class="row">
+      <div class="col-1 mt-3">
+        <a class="btn btn-dark" href="/listings/<%= list._id %>/edit">Update</a>
+      </div>
+      <div class="col-1 offset-1 mt-3">
+        <form action="/listings/<%= list._id %>?_method=DELETE" method="post">
+          <button class="btn btn-dark black">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
