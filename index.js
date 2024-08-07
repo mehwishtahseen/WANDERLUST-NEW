@@ -13,6 +13,8 @@ const { listingSchema, reviewSchema } = require("./schema.js"); // Import schema
 const Review = require("./models/review.js"); // Import the Review model (reviews.js, 1)
 const listings = require("./routes/listings.js"); // Import the listings routes (listings.js, 8)
 const reviews = require("./routes/review.js"); // Import the reviews routes (reviews.js, 3)
+const session = require("express-session");
+const flash = require("connect-flash");
 
 // 2. Connect to the MongoDB database
 main()
@@ -40,6 +42,26 @@ app.engine("ejs", ejsMate); // Use ejs-mate for all .ejs files
 
 // 6. Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public"))); // Serve static files (CSS, JavaScript, images) from the "public" directory
+
+const sessionOptions = {
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.failure = req.flash("failure");
+  next();
+});
 
 // 7. Root route handler
 app.get("/", async (req, res, next) => {

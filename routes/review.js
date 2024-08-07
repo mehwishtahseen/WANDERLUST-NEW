@@ -29,6 +29,7 @@ router.post(
     listing.reviews.push(review); // Add the review to the listing's reviews array
     await review.save(); // Save the new review to the database
     await listing.save(); // Save the updated listing to the database
+    req.flash("success", "New Review Created!");
     res.redirect(`/listings/${listing._id}`); // Redirect to the listing page (listings.js, 9)
   })
 );
@@ -40,6 +41,7 @@ router.delete(
     let { id, reviewId } = req.params; // Extract the listing and review IDs from the route parameters
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); // Remove the review ID from the listing's reviews array (listings.js, 13)
     await Review.findByIdAndDelete(reviewId); // Delete the review from the database (index.js, 1)
+    req.flash("success", "Review Deleted!");
     res.redirect(`/listings/${id}`); // Redirect to the listing page (listings.js, 9)
   })
 );

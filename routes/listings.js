@@ -40,6 +40,10 @@ router.get(
   wrapAsync(async (req, res, next) => {
     let { id } = req.params; // Extract the ID from the route parameters
     let list = await Listing.findById(id).populate("reviews"); // Find the listing by ID and populate reviews (index.js, 1)
+    if (!list) {
+      req.flash("failure", "Listing you requested for .. Does not Exists!");
+      res.redirect("/listings");
+    }
     res.render("./listings/list.ejs", { list }); // Render the list.ejs view with the listing data
   })
 );
@@ -51,6 +55,7 @@ router.post(
   wrapAsync(async (req, res, next) => {
     let newlist = new Listing(req.body.listing); // Create a new listing from the request body
     await newlist.save(); // Save the new listing to the database
+    req.flash("success", "New Listing Created!");
     res.redirect("/listings"); // Redirect to the listings page (index.js, 7)
   })
 );
@@ -61,6 +66,10 @@ router.get(
   wrapAsync(async (req, res, next) => {
     let { id } = req.params; // Extract the ID from the route parameters
     let list = await Listing.findById(id); // Find the listing by ID
+    if (!list) {
+      req.flash("failure", "Listing you requested for .. Does not Exists!");
+      res.redirect("/listings");
+    }
     res.render("./listings/update.ejs", { list }); // Render the update.ejs view with the listing data
   })
 );
@@ -72,6 +81,7 @@ router.put(
   wrapAsync(async (req, res, next) => {
     let { id } = req.params; // Extract the ID from the route parameters
     await Listing.findByIdAndUpdate(id, { ...req.body.listing }); // Update the listing in the database with the new data
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`); // Redirect to the updated listing page (index.js, 7)
   })
 );
@@ -83,6 +93,7 @@ router.delete(
     let { id } = req.params; // Extract the ID from the route parameters
     let deletedList = await Listing.findByIdAndDelete(id); // Delete the listing from the database
     console.log(deletedList);
+    req.flash("success", "Listing Deleted!");
     res.redirect("/listings"); // Redirect to the listings page (index.js, 7)
   })
 );
