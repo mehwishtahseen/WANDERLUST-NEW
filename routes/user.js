@@ -19,7 +19,7 @@ router.post(
       req.flash("success", "User was Registered");
       res.redirect("/listings");
     } catch (e) {
-      req.flash("failure", e.message);
+      req.flash("error", e.message);
       res.redirect("/signup");
     }
   })
@@ -36,7 +36,8 @@ router.post(
     failureFlash: true,
   }),
   async (req, res) => {
-    res.send("Welcoem");
+    req.flash("success", "Login Successfull !!");
+    res.redirect("/listings");
   }
 );
 

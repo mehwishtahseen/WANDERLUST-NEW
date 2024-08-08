@@ -1,6 +1,6 @@
 <% if(success && success.length){ %>
 <div
-  class="alert alert-success alert-dismissible fade show col-6 offset-3 mt-2"
+  class="alert alert-success alert-dismissible fade show col-6 offset-3 mt-1 mb-2"
   role="alert"
 >
   <%= success %>
@@ -15,12 +15,12 @@
 
 <!-- For Error -->
 
-<% if(failure && failure.length){ %>
+<% if(error && error.length){ %>
 <div
   class="alert alert-danger alert-dismissible fade show col-6 offset-3 mt-2"
   role="alert"
 >
-  <%= failure %>
+  <%= error %>
   <button
     type="button"
     class="btn-close"

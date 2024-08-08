@@ -36,7 +36,7 @@ router.get(
     let { id } = req.params;
     let list = await Listing.findById(id).populate("reviews");
     if (!list) {
-      req.flash("failure", "Listing you requested for .. Does not Exists!");
+      req.flash("error", "Listing you requested for .. Does not Exists!");
       res.redirect("/listings");
     }
     res.render("./listings/list.ejs", { list });
@@ -60,7 +60,7 @@ router.get(
     let { id } = req.params;
     let list = await Listing.findById(id);
     if (!list) {
-      req.flash("failure", "Listing you requested for .. Does not Exists!");
+      req.flash("error", "Listing you requested for .. Does not Exists!");
       res.redirect("/listings");
     }
     res.render("./listings/update.ejs", { list });
