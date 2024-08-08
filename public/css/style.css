@@ -20,7 +20,7 @@ body {
 .body {
   flex: 1;
   width: 1450px;
-  margin: 10px auto;
+  margin: 25px auto;
 }
 /* Navbar here  */
 
@@ -88,7 +88,7 @@ body {
 
 .cardsRow {
   width: 1450px;
-  margin: 40px auto;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;

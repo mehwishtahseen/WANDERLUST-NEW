@@ -10,10 +10,15 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
-const listings = require("./routes/listings.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/listings.js");
+const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+const { wrap } = require("module");
+const userRouter = require("./routes/user.js");
 
 main()
   .then((res) => {
@@ -48,6 +53,13 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.failure = req.flash("failure");
@@ -58,8 +70,9 @@ app.get("/", async (req, res, next) => {
   res.redirect("/listings");
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/review", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/review", reviewRouter);
+app.use("/", userRouter);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
