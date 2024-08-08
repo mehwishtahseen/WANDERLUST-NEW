@@ -30,14 +30,13 @@ router.get("/login", (req, res) => {
 });
 
 router.post(
-  "/login1",
+  "/login",
   passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
   async (req, res) => {
-    console.log("User authenticated successfully"); // Check if this logs
-    res.redirect("/listings");
+    res.send("Welcoem");
   }
 );
 
