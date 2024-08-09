@@ -2,19 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/ExpressError.js");
-const { listingSchema } = require("../schema.js");
+const { isLoggedIn, validateListing } = require("../middleware.js");
 
-const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body);
-  if (error) {
-    let errMsg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, errMsg);
-  } else {
-    next();
-  }
-};
-
+//1.  Route for Display All Listings
 router.get(
   "/",
   wrapAsync(async (req, res, next) => {
@@ -23,13 +13,16 @@ router.get(
   })
 );
 
+//2. Route for Display form for a new Listing
 router.get(
   "/new",
+  isLoggedIn,
   wrapAsync(async (req, res, next) => {
     res.render("./listings/newlist.ejs");
   })
 );
 
+//3. Route for Display individual listing (by id)
 router.get(
   "/:id",
   wrapAsync(async (req, res, next) => {
@@ -43,8 +36,10 @@ router.get(
   })
 );
 
+//4. Route to create a newlisting using data from form of ref(route 2)
 router.post(
   "/",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res, next) => {
     let newlist = new Listing(req.body.listing);
@@ -54,8 +49,10 @@ router.post(
   })
 );
 
+//5. Route to generate a form to update a listing
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res, next) => {
     let { id } = req.params;
     let list = await Listing.findById(id);
@@ -67,8 +64,10 @@ router.get(
   })
 );
 
+//6. Route to update a newlisting using data from form of ref(route 5)
 router.put(
   "/:id",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res, next) => {
     let { id } = req.params;
@@ -78,8 +77,10 @@ router.put(
   })
 );
 
+//7. Route to delete a particular listing
 router.delete(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res, next) => {
     let { id } = req.params;
     let deletedList = await Listing.findByIdAndDelete(id);

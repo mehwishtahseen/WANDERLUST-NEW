@@ -30,13 +30,12 @@ body {
   border-bottom: 3px solid #ebebeb;
 }
 .navbar-brand {
-  margin-left: 1.6rem;
+  margin-left: 30px;
   font-size: 27px !important;
   color: #ff385c !important;
 }
-.navbar-collapse {
-  position: absolute;
-  right: 40px;
+.user-links {
+  margin-right: 30px;
 }
 .nav-link {
   color: #222222 !important;
