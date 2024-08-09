@@ -3,6 +3,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const router = express.Router();
 const User = require("../models/user.js");
 const passport = require("passport");
+const { saveRedirectUrl } = require("../middleware.js");
 
 //1. Route to display form for Sign Up
 router.get("/signup", (req, res) => {
@@ -46,6 +47,7 @@ router.get("/login", (req, res) => {
 //4. Route to Login user by data collected from form of ref(route 3)
 router.post(
   "/login",
+  saveRedirectUrl,
 
   // `passport.authenticate` is a middleware function used to authenticate users
   // It checks the provided credentials against the specified strategy (e.g., local)
@@ -57,7 +59,8 @@ router.post(
   }),
   async (req, res) => {
     req.flash("success", "Login Successfull !!");
-    res.redirect("/listings");
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
   }
 );
 
