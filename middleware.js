@@ -8,7 +8,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   //req.isAuthenticated() is a method provided by Passport that checks if the user is authenticated. It returns true if the user is logged in and false otherwise.
 
   if (!req.isAuthenticated()) {
-    req.session.redirectUrl = req.originalUrl;
+    req.session.redirectUrl = req.originalUrl; // to get the url where user desires to go
     req.flash(
       "error",
       "You must be logged in to Create/Update/Delete a New Listing"
@@ -48,7 +48,7 @@ module.exports.validateReview = (req, res, next) => {
   }
 };
 
-//5. Middleware for Authorization of owner on Listings
+// 5. Middleware for authorizing the owner of a listing
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
@@ -60,7 +60,7 @@ module.exports.isOwner = async (req, res, next) => {
   }
 };
 
-//6. Middleware for Authorization of owner on Reviews
+// 6. Middleware for authorizing the author of a review
 module.exports.isReviewAuthor = async (req, res, next) => {
   let { id, reviewId } = req.params;
   let review = await Review.findById(reviewId);

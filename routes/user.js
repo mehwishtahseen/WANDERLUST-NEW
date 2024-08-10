@@ -10,7 +10,7 @@ router.get("/signup", (req, res) => {
   res.render("users/signupform.ejs");
 });
 
-//2. Route to Register user by data collected from form of ref(route 1)
+//2. Route to Register user by data sent ref(route 1)
 router.post(
   "/signup",
   wrapAsync(async (req, res, next) => {
@@ -44,7 +44,7 @@ router.get("/login", (req, res) => {
   res.render("users/loginform.ejs");
 });
 
-//4. Route to Login user by data collected from form of ref(route 3)
+//4. Route to Login user by data sent ref (route 3)
 router.post(
   "/login",
   saveRedirectUrl,
@@ -59,7 +59,7 @@ router.post(
   }),
   async (req, res) => {
     req.flash("success", "Login Successfull !!");
-    let redirectUrl = res.locals.redirectUrl || "/listings";
+    let redirectUrl = res.locals.redirectUrl || "/listings"; // Redirects the user to the desired page after logging in.
     res.redirect(redirectUrl);
   }
 );

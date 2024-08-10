@@ -13,7 +13,7 @@ router.get(
   })
 );
 
-//2. Route for Display form for a new Listing
+//2. Route for Display form for a new Listing if user is logged in
 router.get(
   "/new",
   isLoggedIn,
@@ -27,6 +27,9 @@ router.get(
   "/:id",
   wrapAsync(async (req, res, next) => {
     let { id } = req.params;
+
+    //Here as we need full detials of reviews,owners, and also author of reviews, so we populated it
+
     let list = await Listing.findById(id)
       .populate({
         path: "reviews",
@@ -39,12 +42,12 @@ router.get(
       req.flash("error", "Listing you requested for .. Does not Exists!");
       res.redirect("/listings");
     }
-    console.log(list);
     res.render("./listings/list.ejs", { list });
   })
 );
 
-//4. Route to create a newlisting using data from form of ref(route 2)
+//4. Route to create a newlisting using data sent in request ... ref(route 2) only if user is logged in
+
 router.post(
   "/",
   isLoggedIn,
@@ -58,7 +61,7 @@ router.post(
   })
 );
 
-//5. Route to generate a form to update a listing
+//5. Route to generate a form to update a listing only if user is logged in and owner of it
 router.get(
   "/:id/edit",
   isLoggedIn,
@@ -74,7 +77,7 @@ router.get(
   })
 );
 
-//6. Route to update a newlisting using data from form of ref(route 5)
+//6. Route to update a newlisting using data sent in request ref(route 5) only if user is logged in and owner of the listing
 router.put(
   "/:id",
   isLoggedIn,
@@ -88,7 +91,7 @@ router.put(
   })
 );
 
-//7. Route to delete a particular listing
+//7. Route to delete a particular listing  only if user is logged in and owner of the listing
 router.delete(
   "/:id",
   isLoggedIn,
