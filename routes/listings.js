@@ -1,108 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const { isLoggedIn, validateListing, isOwner } = require("../middleware.js");
+const listingController = require("../controllers/listings.js");
+const multer = require("multer");
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
-//1.  Route for Display All Listings
-router.get(
-  "/",
-  wrapAsync(async (req, res, next) => {
-    let allListings = await Listing.find();
-    res.render("./listings/listings.ejs", { allListings });
-  })
-);
+router
+  .route("/")
+  //1.  Route for Display All Listings
+  .get(wrapAsync(listingController.index))
 
-//2. Route for Display form for a new Listing if user is logged in
-router.get(
-  "/new",
-  isLoggedIn,
-  wrapAsync(async (req, res, next) => {
-    res.render("./listings/newlist.ejs");
-  })
-);
+  //2. Route to create a newlisting using data sent... ref(route 3) only if user is logged in
+  .post(
+    isLoggedIn,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.createListing)
+  );
 
-//3. Route for Display individual listing (by id)
-router.get(
-  "/:id",
-  wrapAsync(async (req, res, next) => {
-    let { id } = req.params;
+//3. Route for Display form for a new Listing if user is logged in
+router.get("/new", isLoggedIn, wrapAsync(listingController.renderNewForm));
 
-    //Here as we need full detials of reviews,owners, and also author of reviews, so we populated it
+router
+  .route("/:id")
+  //4. Route for Display individual listing (by id)
+  .get(wrapAsync(listingController.showListings))
 
-    let list = await Listing.findById(id)
-      .populate({
-        path: "reviews",
-        populate: {
-          path: "author",
-        },
-      })
-      .populate("owner");
-    if (!list) {
-      req.flash("error", "Listing you requested for .. Does not Exists!");
-      res.redirect("/listings");
-    }
-    res.render("./listings/list.ejs", { list });
-  })
-);
+  //5. Route to update a listing using data sent in request ref(route 7) only if user is logged in and owner of the listing
+  .put(
+    isLoggedIn,
+    isOwner,
+    validateListing,
+    wrapAsync(listingController.updateListing)
+  )
 
-//4. Route to create a newlisting using data sent in request ... ref(route 2) only if user is logged in
+  //6. Route to delete a particular listing  only if user is logged in and owner of the listing
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
-router.post(
-  "/",
-  isLoggedIn,
-  validateListing,
-  wrapAsync(async (req, res, next) => {
-    let newlist = new Listing(req.body.listing);
-    newlist.owner = req.user._id;
-    await newlist.save();
-    req.flash("success", "New Listing Created!");
-    res.redirect("/listings");
-  })
-);
-
-//5. Route to generate a form to update a listing only if user is logged in and owner of it
+//7. Route to generate a form to update a listing only if user is logged in and owner of it
 router.get(
   "/:id/edit",
   isLoggedIn,
   isOwner,
-  wrapAsync(async (req, res, next) => {
-    let { id } = req.params;
-    let list = await Listing.findById(id);
-    if (!list) {
-      req.flash("error", "Listing you requested for .. Does not Exists!");
-      res.redirect("/listings");
-    }
-    res.render("./listings/update.ejs", { list });
-  })
-);
-
-//6. Route to update a newlisting using data sent in request ref(route 5) only if user is logged in and owner of the listing
-router.put(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  validateListing,
-  wrapAsync(async (req, res, next) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    req.flash("success", "Listing Updated!");
-    res.redirect(`/listings/${id}`);
-  })
-);
-
-//7. Route to delete a particular listing  only if user is logged in and owner of the listing
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  wrapAsync(async (req, res, next) => {
-    let { id } = req.params;
-    let deletedList = await Listing.findByIdAndDelete(id);
-    console.log(deletedList);
-    req.flash("success", "Listing Deleted!");
-    res.redirect("/listings");
-  })
+  wrapAsync(listingController.renderUpdateForm)
 );
 
 module.exports = router;
