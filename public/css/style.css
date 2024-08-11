@@ -144,3 +144,9 @@ body {
 .float-btn {
   float: right;
 }
+
+#map {
+  height: 400px;
+  width: 100%;
+  margin-top: 30px;
+}
