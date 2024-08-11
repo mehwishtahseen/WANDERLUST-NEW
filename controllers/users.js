@@ -1,5 +1,4 @@
-const User = require("../models/user.js");
-const passport = require("passport");
+const User = require("../models/user.js"); // Import User Model
 
 //1.
 module.exports.renderSignupForm = async (req, res) => {

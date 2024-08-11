@@ -1,3 +1,6 @@
+// Load environment variables from a .env file if the application is not in production mode
+// it will load environment variables for the entire Node.js application so can be accessed in any file
+// The `dotenv` package is used to load environment variables from a `.env` file into `process.env`.
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
@@ -7,16 +10,16 @@ const port = 8080;
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
-const ejsMate = require("ejs-mate");
-const ExpressError = require("./utils/ExpressError.js");
-const session = require("express-session");
-const flash = require("connect-flash");
+const ejsMate = require("ejs-mate"); // Import ejs-mate for using EJS layout templates
+const ExpressError = require("./utils/ExpressError.js"); // Import custom error class for handling application errors
+const session = require("express-session"); // Import express-session for managing user sessions
+const flash = require("connect-flash"); // Import connect-flash for flash messages
 const passport = require("passport");
-const LocalStrategy = require("passport-local");
+const LocalStrategy = require("passport-local"); // Import local strategy for Passport
 const User = require("./models/user.js");
-const listingRouter = require("./routes/listings.js");
-const reviewRouter = require("./routes/review.js");
-const userRouter = require("./routes/user.js");
+const listingRouter = require("./routes/listings.js"); // Import router for listing-related routes
+const reviewRouter = require("./routes/review.js"); // Import router for review-related routes
+const userRouter = require("./routes/user.js"); // Import router for user-related routes
 
 //1. Connecting with Database
 main()

@@ -1,5 +1,5 @@
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema, reviewSchema } = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js"); // Import the necessary schemas for listings and reviews from the schema.js file
 const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
 
@@ -52,6 +52,7 @@ module.exports.validateReview = (req, res, next) => {
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
+  // Check if the curruser is the owner of listing
   if (!res.locals.currUser._id.equals(listing.owner._id)) {
     req.flash("error", "You are not the Owner of this Listing");
     return res.redirect(`/listings/${id}`);
@@ -64,6 +65,7 @@ module.exports.isOwner = async (req, res, next) => {
 module.exports.isReviewAuthor = async (req, res, next) => {
   let { id, reviewId } = req.params;
   let review = await Review.findById(reviewId);
+  // Check if the curruser is the author of review
   if (!res.locals.currUser._id.equals(review.author._id)) {
     req.flash("error", "You are not the Author of this Review");
     return res.redirect(`/listings/${id}`);

@@ -1,10 +1,9 @@
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 const router = express.Router();
-const User = require("../models/user.js");
-const passport = require("passport");
-const { saveRedirectUrl } = require("../middleware.js");
-const userController = require("../controllers/users.js");
+const passport = require("passport"); // Import Passport, a middleware for authentication in Node.js applications.
+const { saveRedirectUrl } = require("../middleware.js"); // Required necessary middleware functions
+const userController = require("../controllers/users.js"); // Controller for User route handlers
 
 router
   .route("/signup")
