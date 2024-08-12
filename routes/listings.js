@@ -51,4 +51,7 @@ router.get(
   wrapAsync(listingController.renderUpdateForm)
 );
 
+//8. Route to display listings of a particular category
+router.get("/category/:category", wrapAsync(listingController.showCategories));
+
 module.exports = router;

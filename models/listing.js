@@ -54,6 +54,23 @@ const listingSchema = new Schema({
       required: true,
     },
   },
+  category: {
+    type: String,
+    enum: [
+      "Trending",
+      "Rooms",
+      "Iconic-Cities",
+      "Mountains",
+      "Castles",
+      "Greenery",
+      "Camping",
+      "Farms",
+      "Arctic",
+      "Beaches",
+      "Pools",
+      "Riverfronts",
+    ],
+  },
 });
 
 // After a listing is deleted, also delete all associated reviews

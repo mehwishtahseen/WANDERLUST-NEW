@@ -1,5 +1,99 @@
 <% layout("/layouts/boilerplate") %>
-<div class="cardsRow">
+<!-- Display Category bar on page -->
+
+<div class="filters" id="filters">
+  <a href="/listings/category/Trending">
+    <div class="filter">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </div>
+  </a>
+  <a href="/listings/category/Rooms">
+    <div class="filter">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </div>
+  </a>
+  <a href="/listings/category/Iconic-Cities">
+    <div class="filter">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic Cities</p>
+    </div>
+  </a>
+  <a href="/listings/category/Mountains">
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </div>
+  </a>
+  <a href="/listings/category/Castles">
+    <div class="filter">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </div>
+  </a>
+  <a href="/listings/category/Greenery">
+    <div class="filter">
+      <div><i class="fa-solid fa-tree"></i></div>
+      <p>Greenery</p>
+    </div>
+  </a>
+  <a href="/listings/category/Camping">
+    <div class="filter">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </div>
+  </a>
+  <a href="/listings/category/Farms">
+    <div class="filter">
+      <div><i class="fa-solid fa-wheat-awn"></i></div>
+      <p>Farms</p>
+    </div>
+  </a>
+  <a href="/listings/category/Arctic">
+    <div class="filter">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Arctic</p>
+    </div>
+  </a>
+  <a href="/listings/category/Beaches">
+    <div class="filter">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beaches</p>
+    </div>
+  </a>
+  <a href="/listings/category/Pools">
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Pools</p>
+    </div>
+  </a>
+  <a href="/listings/category/Riverfronts">
+    <div class="filter">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Riverfronts</p>
+    </div>
+  </a>
+
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="flexSwitchCheckDefault"
+      />
+      <label class="form-check-label" for="flexSwitchCheckDefault"
+        >Display total after Taxes</label
+      >
+    </div>
+  </div>
+</div>
+
+<!-- To display all listings only if available -->
+
+<% if(allListings.length > 0){ %>
+<div class="cardsRow mt-4">
   <% for(listings of allListings){ %>
   <a href="/listings/<%= listings._id %>">
     <div class="card listing-card" style="width: 20rem">
@@ -14,10 +108,17 @@
         <p class="card-text">
           <b><%= listings.title %></b>
           <br />
-          &#8377; <%= listings.price.toLocaleString("en-IN") %> / Night
+          &#8377; <%= listings.price.toLocaleString("en-IN") %> / Night &nbsp;
+          <i class="tax-info"> + &nbsp; 18% GST </i>
         </p>
       </div>
     </div>
   </a>
   <% } %>
 </div>
+<% } else { %>
+<div class="not-avail">
+  <i class="fa-solid fa-face-sad-tear"></i>
+  <h3>Oops!! No available Listings for this category at the Moment.</h3>
+</div>
+<% } %>
