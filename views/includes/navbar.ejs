@@ -11,18 +11,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Add new Listing</a>
+        <a class="logo_name" href="/listings">Wanderlust</a>
       </div>
       <div class="navbar-nav user-links ms-auto">
-        <% if (!currUser){ %>
-        <a class="nav-link" href="/signup">Sign Up</a>
-        <a class="nav-link" href="/login"> Login</a>
-        <% } %> <% if (currUser){ %>
-        <a class="nav-link" href="/logout">Logout</a>
-        <% } %>
+        <a class="link_box" href="/listings/new">Add your home</a>
+        <div class="registerbox">
+          <i class="fa-solid fa-bars"></i>
+          <i class="fa-solid fa-user"></i>
+        </div>
       </div>
     </div>
   </div>
 </nav>
+
+<div class="userdatabox hide">
+  <!-- If User is not logged in   -->
+  <% if (!currUser){ %>
+  <a class="nav-link" href="/signup">Sign Up</a>
+  <a class="nav-link" href="/login">Login</a>
+  <% } %> <% if (currUser){ %>
+  <a class="nav-link" href="/logout">Logout</a>
+  <% } %>
+</div>

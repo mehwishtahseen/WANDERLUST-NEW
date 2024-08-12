@@ -22,29 +22,89 @@ body {
   width: 1450px;
   margin: 25px auto;
 }
+
 /* Navbar here  */
 
 .navbar {
   height: 80px;
   background-color: #ffffff;
   border-bottom: 3px solid #ebebeb;
+  padding: 0px 50px !important;
+  z-index: 1 !important;
 }
 .navbar-brand {
-  margin-left: 30px;
-  font-size: 27px !important;
+  font-size: 35px !important;
   color: #ff385c !important;
 }
-.user-links {
-  margin-right: 30px;
+.navbar-nav {
+  font-size: 18px !important;
+  height: 80px;
+  align-items: center;
 }
 .nav-link {
   color: #222222 !important;
-  font-size: 18px !important;
 }
 .nav-link:hover {
-  font-weight: 600;
+  font-weight: 700;
   transition: 1s;
 }
+.logo_name {
+  text-decoration: none;
+  color: #ff385c;
+  font-weight: 500;
+  font-size: 22px;
+  margin-left: -5px;
+}
+.link_box {
+  color: #222222;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+.link_box:hover {
+  background-color: #ebebeb;
+  transition: 1s;
+}
+.registerbox {
+  border-radius: 100px;
+  border: 2px solid #ebebeb;
+  padding: 8px 11px 8px 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.fa-bars {
+  font-size: 16px;
+}
+.fa-user {
+  background-color: #6a6a6a;
+  border-radius: 1000px;
+  padding: 7px 8px;
+  color: #ffffff;
+}
+.registerbox:hover {
+  cursor: pointer;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  transition: 1s;
+}
+.userdatabox {
+  background-color: #ffffff;
+  border: 2px solid #ebebeb;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  position: fixed;
+  top: 70px;
+  right: 58px;
+  z-index: 2;
+  border-radius: 16px;
+  padding: 8px 22px;
+  line-height: 2.5;
+}
+
 /* Footer here  */
 
 .footerInfo {
@@ -149,4 +209,27 @@ body {
   height: 400px;
   width: 100%;
   margin-top: 30px;
+}
+.hide {
+  display: none;
+}
+
+/* For tablet view  */
+
+@media only screen and (max-width: 1000px) {
+  .navbar {
+    padding: 0px 20px !important;
+  }
+}
+
+/* For Mobile View  */
+
+@media only screen and (max-width: 536px) {
+  .navbar {
+    padding: 0px 5px !important;
+  }
+  .navbar-toggler {
+    border: none !important;
+    font-size: 18px !important;
+  }
 }
