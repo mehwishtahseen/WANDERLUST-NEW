@@ -21,7 +21,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listings.js"); // Import router for listing-related routes
 const reviewRouter = require("./routes/review.js"); // Import router for review-related routes
 const userRouter = require("./routes/user.js"); // Import router for user-related routes
-const dbUrl = process.env.ATLASDB_URl;
+const dbUrl = process.env.ATLASDB_URL;
 
 //1. Connecting with Database
 main()
