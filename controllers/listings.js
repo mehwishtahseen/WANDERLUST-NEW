@@ -5,18 +5,18 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken }); // Initialize t
 // Basically it creates a geocoding client configured with your API token,
 // allowing you to interact with the Mapbox Geocoding API for converting addresses into coordinates.
 
-//1.
+//1. Controller to Display All Listings
 module.exports.index = async (req, res, next) => {
   let allListings = await Listing.find();
   res.render("./listings/listings.ejs", { allListings });
 };
 
-//2.
+//2. Controller to Display form for a new Listing
 module.exports.renderNewForm = async (req, res, next) => {
   res.render("./listings/newlist.ejs");
 };
 
-//3.
+//3. Controller to Display individual listing (by id)
 module.exports.showListings = async (req, res, next) => {
   let { id } = req.params;
   //Here as we need full detials of reviews,owners, and also author of reviews, so we populated it
@@ -36,7 +36,7 @@ module.exports.showListings = async (req, res, next) => {
   res.render("./listings/list.ejs", { list });
 };
 
-//4.
+//4. Controller to create a newlisting using data sent
 module.exports.createListing = async (req, res, next) => {
   // Generating Coordinates for the location entered by user
   let cordinate = await geocodingClient
@@ -58,7 +58,7 @@ module.exports.createListing = async (req, res, next) => {
   res.redirect("/listings");
 };
 
-//5.
+//5. Controller to generate a form to update a listing
 module.exports.renderUpdateForm = async (req, res, next) => {
   let { id } = req.params;
   let list = await Listing.findById(id);
@@ -72,7 +72,7 @@ module.exports.renderUpdateForm = async (req, res, next) => {
   res.render("./listings/update.ejs", { list, orignalImageUrl });
 };
 
-//6.
+//6. Controller to update a listing using data sent
 module.exports.updateListing = async (req, res, next) => {
   // Generating new Coordinates for the updated location entered by user
   let cordinate = await geocodingClient
@@ -96,7 +96,7 @@ module.exports.updateListing = async (req, res, next) => {
   res.redirect(`/listings/${id}`);
 };
 
-//7.
+//7. Controller to delete a particular listing
 module.exports.deleteListing = async (req, res, next) => {
   let { id } = req.params;
   let deletedList = await Listing.findByIdAndDelete(id);
@@ -105,9 +105,23 @@ module.exports.deleteListing = async (req, res, next) => {
   res.redirect("/listings");
 };
 
-//8.
+//8. Controller to display listings of a particular category
 module.exports.showCategories = async (req, res, next) => {
   let { category } = req.params;
   let allListings = await Listing.find({ category: category });
+  res.render("./listings/listings.ejs", { allListings });
+};
+
+//9. Controller to Search Listings on basis of title, location or country
+module.exports.searchListings = async (req, res, next) => {
+  let { search } = req.query;
+  // regex is regular expressions which are used as search patterns
+  let allListings = await Listing.find({
+    $or: [
+      { country: { $regex: search } },
+      { title: { $regex: search } },
+      { location: { $regex: search } },
+    ],
+  });
   res.render("./listings/listings.ejs", { allListings });
 };

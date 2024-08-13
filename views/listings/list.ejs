@@ -134,13 +134,14 @@
         <% for(review of list.reviews){ %>
         <div class="card col-5 mb-3">
           <div class="card-body">
-            <h5 class="card-title mb-3">
+            <h5 class="card-title mb-3 rating-head">
               <b>@<%= review.author.username %></b>
+              <p
+                class="card-text starability-result"
+                data-rating="<%= review.rating %>"
+              ></p>
             </h5>
-            <p
-              class="card-text starability-result"
-              data-rating="<%= review.rating %>"
-            ></p>
+
             <p class="card-text"><%= review.comment %></p>
           </div>
           <form

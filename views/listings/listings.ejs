@@ -93,7 +93,7 @@
 <!-- To display all listings only if available -->
 
 <% if(allListings.length > 0){ %>
-<div class="cardsRow mt-4">
+<div class="cardsRow">
   <% for(listings of allListings){ %>
   <a href="/listings/<%= listings._id %>">
     <div class="card listing-card" style="width: 20rem">
@@ -108,8 +108,14 @@
         <p class="card-text">
           <b><%= listings.title %></b>
           <br />
-          &#8377; <%= listings.price.toLocaleString("en-IN") %> / Night &nbsp;
-          <i class="tax-info"> + &nbsp; 18% GST </i>
+          <p2>
+            &#8377; <%= listings.price.toLocaleString("en-IN") %> / Night &nbsp;
+            <p1 class="tax-info mt-2">
+              <br />
+              &#8377; <%= (listings.price + listings.price * 18 /
+              100).toLocaleString("en-IN") %> / Night &nbsp; <b>(18% GST)</b>
+            </p1>
+          </p2>
         </p>
       </div>
     </div>

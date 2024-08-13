@@ -26,12 +26,15 @@ router
 //3. Route for Display form for a new Listing if user is logged in
 router.get("/new", isLoggedIn, wrapAsync(listingController.renderNewForm));
 
+//4. Route to search listings
+router.get("/search", wrapAsync(listingController.searchListings));
+
 router
   .route("/:id")
-  //4. Route for Display individual listing (by id)
+  //5. Route for Display individual listing (by id)
   .get(wrapAsync(listingController.showListings))
 
-  //5. Route to update a listing using data sent in request ref(route 7) only if user is logged in and owner of the listing
+  //6. Route to update a listing using data sent in request ref(route 7) only if user is logged in and owner of the listing
   .put(
     isLoggedIn,
     isOwner,
@@ -40,10 +43,10 @@ router
     wrapAsync(listingController.updateListing)
   )
 
-  //6. Route to delete a particular listing  only if user is logged in and owner of the listing
+  //7. Route to delete a particular listing  only if user is logged in and owner of the listing
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
-//7. Route to generate a form to update a listing only if user is logged in and owner of it
+//8. Route to generate a form to update a listing only if user is logged in and owner of it
 router.get(
   "/:id/edit",
   isLoggedIn,
@@ -51,7 +54,7 @@ router.get(
   wrapAsync(listingController.renderUpdateForm)
 );
 
-//8. Route to display listings of a particular category
+//9. Route to display listings of a particular category
 router.get("/category/:category", wrapAsync(listingController.showCategories));
 
 module.exports = router;

@@ -1,11 +1,11 @@
 const User = require("../models/user.js"); // Import User Model
 
-//1.
+//1. Controller to display form for Sign Up
 module.exports.renderSignupForm = async (req, res) => {
   res.render("users/signupform.ejs");
 };
 
-//2.
+//2.  Controller to Register user by data sent
 module.exports.signUpUser = async (req, res, next) => {
   try {
     let { username, email, password } = req.body;
@@ -27,19 +27,19 @@ module.exports.signUpUser = async (req, res, next) => {
   }
 };
 
-//3.
+//3.  Controller for Displaying a login form
 module.exports.renderLoginForm = async (req, res) => {
   res.render("users/loginform.ejs");
 };
 
-//4.
+//4.  Controller to Login user by data sent
 module.exports.loginUser = async (req, res) => {
   req.flash("success", "Login Successfull !!");
   let redirectUrl = res.locals.redirectUrl || "/listings"; // Redirects the user to the desired page after logging in.
   res.redirect(redirectUrl);
 };
 
-//5.
+//5.  Controller to logout a user
 module.exports.logOutUser = async (req, res, next) => {
   // `req.logout` is a Passport method that logs the user out of the current session
   req.logOut((err) => {

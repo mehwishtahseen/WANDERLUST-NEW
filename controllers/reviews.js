@@ -1,7 +1,7 @@
 const Listing = require("../models/listing.js"); // Import Listing Model
 const Review = require("../models/review.js"); // Import Review Model
 
-//1.
+//1. Controller for Creating a review by using data sent
 module.exports.createReview = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
@@ -14,7 +14,7 @@ module.exports.createReview = async (req, res, next) => {
   res.redirect(`/listings/${listing._id}`);
 };
 
-//2.
+//2. Controller for Deleting a review by id
 module.exports.deleteReview = async (req, res, next) => {
   let { id, reviewId } = req.params;
   await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); // Remove the reference to the review from the listing's reviews array
