@@ -1,14 +1,23 @@
 <nav class="navbar navbar-expand-md bg-body-light sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i> </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
+    <form
+      action="/listings/search"
+      class="d-flex toggle-hide needs-validation"
+      role="search"
+      novalidate
     >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <input
+        class="form-control me-2 search-inp toggle-hide"
+        type="search"
+        placeholder="Search Destinations"
+        name="search"
+        required
+      />
+      <button class="btn btn-search toggle-hide" type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="logo_name" href="/listings">Wanderlust</a>
@@ -22,7 +31,7 @@
             name="search"
           />
           <button class="btn btn-search" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i> Search
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </form>
       </div>

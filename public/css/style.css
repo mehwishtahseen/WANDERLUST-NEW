@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
+
 body {
   background-color: #ffffff !important;
   display: flex;
@@ -13,13 +14,14 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 .hr {
   height: 3px;
   background-color: #ebebeb;
 }
 .body {
   flex: 1;
-  width: 1450px;
+  width: 100%;
   margin: 25px auto;
 }
 
@@ -104,7 +106,6 @@ body {
   padding: 10px 22px;
   line-height: 2.5;
 }
-
 .search-inp {
   border-radius: 25px !important;
   padding: 8px 20px !important;
@@ -118,36 +119,59 @@ body {
   background-color: #ff385c !important;
   color: #ffffff !important;
   line-height: 1.8 !important;
-  padding: 0px 16px !important;
+  padding: 0px 14px !important;
   border-radius: 25px !important;
-}
-.btn-search:hover {
-  background-color: #ff385c !important;
-  color: #ffffff !important;
 }
 .btn-search i {
   font-size: 14px;
 }
 
 /* Filters Here  */
-
-.filters {
+.filter-box {
+  width: 100%;
   padding: 0px 60px;
   display: flex;
-  gap: 33px;
   justify-content: center;
   position: sticky;
   top: 80px;
+  left: 0px;
   z-index: 1;
   background-color: #ffffff;
-  margin: -15px -35px;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   height: 83px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-type: x mandatory;
+}
+.filter-box::-webkit-scrollbar {
+  height: 5px;
+}
+/* Track */
+.filter-box::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+/* Handle */
+.filter-box::-webkit-scrollbar-thumb {
+  background: #ff385c;
+  border-radius: 10px;
+}
+/* Handle on hover */
+.filter-box::-webkit-scrollbar-thumb:hover {
+  background: #ff385c;
+}
+.filters {
+  max-width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 33px;
+  white-space: nowrap;
 }
 .filters a {
   text-decoration: none;
   color: #000000;
   opacity: 0.7;
+  flex: 0 0 auto;
 }
 .filter {
   text-align: center;
@@ -177,12 +201,22 @@ body {
 
 /* All Listings here  */
 
-.cardsRow {
-  width: 1400px;
+.listing-box {
+  width: 100%;
   margin: 50px auto 0px;
+  max-width: 1450px;
+  display: flex;
+  justify-content: center;
+}
+.cardsRow {
+  width: 1430px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px 40px;
+  grid-template-columns: repeat(auto-fit, min(320px, 100%));
+  justify-content: start;
+  gap: 15px 45px;
+}
+.eachCard {
+  width: 320px !important;
 }
 .cardsRow a {
   text-decoration: none;
@@ -201,11 +235,11 @@ body {
   border-radius: 16px !important;
   width: 100% !important;
   object-fit: cover !important;
+  height: 288px !important;
 }
 .card-body {
   padding: 12px 0px !important;
 }
-
 .btn-dark {
   background-color: #ff385c !important;
   border: none !important;
@@ -286,45 +320,328 @@ p2 {
   width: 100%;
   margin-top: 30px;
 }
-.hide {
-  display: none;
-}
-
-.tax-info {
-  display: none;
-}
 .not-avail {
   text-align: center;
   width: 800px;
-  margin: 70px auto;
+  margin: 120px auto;
   color: #000000;
 }
 .not-avail i {
   color: #ff385c;
   opacity: 1 !important;
   font-size: 80px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 .not-avail h3 {
   opacity: 0.7;
 }
 
-/* For tablet view  */
+/* Hiding userdatabox  */
+.hide {
+  display: none;
+}
+/* Hiding Searchbox of Mob  */
+.toggle-hide {
+  display: none !important;
+}
+/* Hiding Na of mob  */
+.toggle-mob-nav {
+  display: none !important;
+}
+/* Hiding total tax price  */
+.tax-info {
+  display: none;
+}
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1430px) {
   .navbar {
     padding: 0px 20px !important;
   }
+  .userdatabox {
+    right: 30px;
+  }
+  .filter-box {
+    padding: 0px 30px;
+  }
+  .cardsRow {
+    width: 1065px;
+    gap: 15px 45px;
+  }
 }
 
-/* For Mobile View  */
+@media only screen and (max-width: 1390px) {
+  .navbar {
+    padding: 0px 40px !important;
+  }
+  .userdatabox {
+    right: 50px;
+  }
+  .filter-box {
+    padding: 0px 45px;
+  }
+  .filters {
+    gap: 40px;
+  }
+  .tax-toggle {
+    display: none;
+  }
+}
 
-@media only screen and (max-width: 536px) {
+@media only screen and (max-width: 1190px) {
+  .navbar {
+    padding: 0px 20px !important;
+  }
+  .userdatabox {
+    right: 30px;
+  }
+  .filter-box {
+    padding: 0px 30px;
+  }
+  .filters {
+    gap: 30px;
+  }
+}
+
+/* For tablet view  */
+
+@media only screen and (max-width: 1065px) {
+  .search-inp {
+    padding: 7px 12px !important;
+  }
+  .btn-search {
+    padding: 0px 12px !important;
+  }
+  .filter-box {
+    padding: 0px 20px;
+  }
+  .filters {
+    gap: 20px;
+  }
+  .cardsRow {
+    width: 700px;
+  }
+}
+
+@media only screen and (max-width: 937px) {
+  .navbar {
+    padding: 0px 10px !important;
+  }
+  .userdatabox {
+    right: 20px;
+  }
+  .search-inp {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+  }
+  .btn-search {
+    font-size: 12px !important;
+  }
+  .btn-search i {
+    font-size: 11px;
+  }
+  .filter-box {
+    padding: 0px 25px;
+  }
+  .filters {
+    gap: 27px;
+  }
+}
+
+@media only screen and (max-width: 764px) {
+  .toggle-hide {
+    display: flex;
+  }
+  .search-inp {
+    display: block !important;
+  }
+  .btn-search {
+    display: block !important;
+  }
+  .search-inp {
+    padding: 6px 10px !important;
+  }
+  .btn-search i {
+    font-size: 14px;
+  }
+  .filters {
+    gap: 25px;
+  }
+  .toggle-mob-nav {
+    padding: 0px 10px;
+    background-color: #ffffff;
+    height: 65px;
+    display: flex !important;
+    justify-content: space-evenly;
+    align-items: center;
+    position: sticky !important;
+    bottom: 0px !important;
+    left: 0px !important;
+    box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.2);
+    z-index: 1 !important;
+  }
+  .logo_name {
+    color: #000000;
+    font-size: 25px;
+  }
+  .link_box {
+    font-size: 18px;
+    padding: 4px 11px;
+    margin-right: 0px;
+    background-color: #d1d1d1;
+  }
+  .link_box:hover {
+    transform: scale(1.03);
+  }
+  .registerbox {
+    position: relative;
+    padding: 0%;
+  }
+  .fa-user {
+    padding: 10px 12px;
+    background-color: #ff385c;
+  }
+  .registerbox:hover {
+    cursor: pointer;
+    box-shadow: none;
+    transform: scale(1);
+  }
+  .userdatabox-mob {
+    display: block;
+    top: 81.2%;
+    right: 16.5%;
+    display: block;
+    z-index: 10;
+    width: 120px;
+    height: 105px;
+  }
+  .not-avail {
+    width: 600px;
+    margin: 160px auto;
+  }
+  .not-avail i {
+    font-size: 60px;
+  }
+  .hide {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 700px) {
   .navbar {
     padding: 0px 5px !important;
   }
   .navbar-toggler {
     border: none !important;
     font-size: 18px !important;
+  }
+  .cardsRow {
+    width: 320px;
+  }
+  .footerInfo {
+    flex-direction: column;
+    justify-content: center;
+    height: 120px;
+    padding: 10px 50px 0px;
+    gap: 8px;
+  }
+  .userdatabox-mob {
+    right: 16%;
+  }
+  .not-avail {
+    width: 500px;
+    margin: 160px auto;
+  }
+  .not-avail i {
+    font-size: 60px;
+  }
+}
+
+@media only screen and (max-width: 536px) {
+  .filter-box {
+    height: 70px;
+  }
+  .filters {
+    gap: 44px;
+  }
+  .filter {
+    margin-top: 0px;
+  }
+  .tax-toggle {
+    margin-bottom: 22px;
+  }
+  .listing-box {
+    margin: 30px auto 0px;
+  }
+  .footerInfo {
+    flex-direction: column;
+    justify-content: center;
+    height: 135px;
+    padding: 5px 10px 0px;
+    gap: 10px;
+  }
+  .f-info-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .f-info-socials i {
+    margin-right: 5px;
+  }
+  .userdatabox-mob {
+    right: 14%;
+  }
+  .not-avail {
+    width: 380px;
+    margin: 120px auto;
+  }
+  .not-avail i {
+    font-size: 55px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .filters {
+    gap: 57px;
+  }
+  .cardsRow {
+    width: 290px;
+    grid-template-columns: repeat(auto-fit, min(290px, 100%));
+  }
+  .eachCard {
+    width: 290px !important;
+  }
+  .card-img-top {
+    height: 265px !important;
+  }
+  .userdatabox-mob {
+    right: 12%;
+  }
+  .not-avail {
+    width: 300px;
+    margin: 120px auto;
+  }
+  .not-avail i {
+    font-size: 55px;
+  }
+}
+
+@media only screen and (max-width: 335px) {
+  .filters {
+    gap: 50px;
+  }
+  .search-inp {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+  .userdatabox-mob {
+    right: 8.5%;
+  }
+  .not-avail {
+    width: 275px;
+    margin: 120px auto;
+  }
+  .not-avail i {
+    font-size: 45px;
   }
 }

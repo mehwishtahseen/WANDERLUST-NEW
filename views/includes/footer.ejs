@@ -2,8 +2,6 @@
   <div class="footerInfo">
     <div class="f-info-links">
       <div>&copy; Wanderlust Private Limited</div>
-      <a href="">&#x2022; <span>Privacy</span></a>
-      <a href="">&#x2022; <span>Terms</span></a>
     </div>
 
     <div class="f-info-socials">
@@ -19,3 +17,22 @@
     </div>
   </div>
 </footer>
+
+<!-- Navbar for mobile phone -->
+
+<nav class="toggle-mob-nav bg-body-light">
+  <a class="logo_name" href="/listings"> <i class="fa-solid fa-house"></i></a>
+  <a class="link_box" href="/listings/new"> <i class="fa-solid fa-plus"></i></a>
+  <div class="registerbox rgstr-mob">
+    <i class="fa-solid fa-user"></i>
+  </div>
+</nav>
+<div class="userdatabox userdatabox-mob hide">
+  <!-- If User is not logged in   -->
+  <% if (!currUser){ %>
+  <a class="nav-link" href="/signup">Sign Up</a>
+  <a class="nav-link" href="/login">Login</a>
+  <% } %> <% if (currUser){ %>
+  <a class="nav-link" href="/logout">Logout</a>
+  <% } %>
+</div>
