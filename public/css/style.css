@@ -300,6 +300,8 @@ p2 {
   transition: 1s;
 }
 
+/* Shoe Review in listing  */
+
 .review-card {
   padding: 0 8px;
   margin-top: 30px !important;
@@ -441,6 +443,7 @@ p2 {
   }
   .filter-box {
     padding: 0px 25px;
+    overflow: scroll;
   }
   .filters {
     gap: 27px;
@@ -482,11 +485,13 @@ p2 {
   .logo_name {
     color: #000000;
     font-size: 25px;
+    margin-left: 9px;
   }
   .link_box {
     font-size: 18px;
     padding: 4px 11px;
     margin-right: 0px;
+    margin-left: 12px;
     background-color: #d1d1d1;
   }
   .link_box:hover {
@@ -506,13 +511,18 @@ p2 {
     transform: scale(1);
   }
   .userdatabox-mob {
+    background-color: #ff385c;
+    text-align: center;
     display: block;
-    top: 81.2%;
-    right: 16.5%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: block;
     z-index: 10;
-    width: 120px;
-    height: 105px;
+    width: 130px;
+  }
+  .userdatabox-mob a {
+    color: #ffffff !important;
   }
   .not-avail {
     width: 600px;
@@ -523,6 +533,10 @@ p2 {
   }
   .hide {
     display: none;
+  }
+  .review-card {
+    padding: 0 4px;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -544,9 +558,6 @@ p2 {
     padding: 10px 50px 0px;
     gap: 8px;
   }
-  .userdatabox-mob {
-    right: 16%;
-  }
   .not-avail {
     width: 500px;
     margin: 160px auto;
@@ -564,7 +575,7 @@ p2 {
     gap: 44px;
   }
   .filter {
-    margin-top: 0px;
+    margin-top: 6px;
   }
   .tax-toggle {
     margin-bottom: 22px;
@@ -587,9 +598,6 @@ p2 {
   }
   .f-info-socials i {
     margin-right: 5px;
-  }
-  .userdatabox-mob {
-    right: 14%;
   }
   .not-avail {
     width: 380px;
@@ -614,9 +622,6 @@ p2 {
   .card-img-top {
     height: 265px !important;
   }
-  .userdatabox-mob {
-    right: 12%;
-  }
   .not-avail {
     width: 300px;
     margin: 120px auto;
@@ -633,9 +638,6 @@ p2 {
   .search-inp {
     padding: 6px 10px !important;
     font-size: 12px !important;
-  }
-  .userdatabox-mob {
-    right: 8.5%;
   }
   .not-avail {
     width: 275px;

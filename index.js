@@ -13,7 +13,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); // Import ejs-mate for using EJS layout templates
 const ExpressError = require("./utils/ExpressError.js"); // Import custom error class for handling application errors
 const session = require("express-session"); // Import express-session for managing user sessions
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo"); // Import connect-mongo for MongoDB session store
 const flash = require("connect-flash"); // Import connect-flash for flash messages
 const passport = require("passport");
 const LocalStrategy = require("passport-local"); // Import local strategy for Passport
@@ -21,7 +21,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listings.js"); // Import router for listing-related routes
 const reviewRouter = require("./routes/review.js"); // Import router for review-related routes
 const userRouter = require("./routes/user.js"); // Import router for user-related routes
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL; // MongoDB connection URL from environment variables
 
 //1. Connecting with Database
 main()
@@ -45,11 +45,11 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
 const store = MongoStore.create({
-  mongoUrl: dbUrl,
+  mongoUrl: dbUrl, // URL of the MongoDB database
   crypto: {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET, // Secret for encrypting session data
   },
-  touchAfter: 24 * 3600,
+  touchAfter: 24 * 3600, // Update session if modified after 24 hours
 });
 
 store.on("error", () => {
@@ -58,7 +58,7 @@ store.on("error", () => {
 
 //3. Setting up Session Configuration
 const sessionOptions = {
-  store,
+  store, // Use the MongoDB store for session management
   secret: process.env.SECRET, // Secret key for signing the session ID cookie
   resave: false, // Don't save the session if it's unmodified
   saveUninitialized: true, // Save new sessions to the store

@@ -46,12 +46,13 @@
   </div>
 </nav>
 
+<%- include("../includes/flash.ejs") %>
 <div class="userdatabox hide">
   <!-- If User is not logged in   -->
   <% if (!currUser){ %>
   <a class="nav-link" href="/signup">Sign Up</a>
-  <a class="nav-link" href="/login">Login</a>
+  <a class="nav-link" href="/login">Log In</a>
   <% } %> <% if (currUser){ %>
-  <a class="nav-link" href="/logout">Logout</a>
+  <a class="nav-link" href="/logout">Log Out</a>
   <% } %>
 </div>
